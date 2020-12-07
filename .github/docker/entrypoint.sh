@@ -1,5 +1,4 @@
-#!/bin/bash 
+#!/bin/sh  # alpineにbashはない
 set -eux
 
-ls 
-#ptex2pdf -l $1 && ptex2pdf -l $1 && ptex2pdf -l $1
+ptex2pdf -l $1 && ptex2pdf -l $1 && ptex2pdf -l $1
