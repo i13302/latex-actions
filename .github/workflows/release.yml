@@ -23,5 +23,7 @@ jobs:
     - name: Build
       uses: ./.github/docker
     - name: Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: chmod +x ./.github/scripts/paper_release.sh && ./.github/scripts/paper_release.sh
   
