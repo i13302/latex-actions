@@ -1,0 +1,4 @@
+#!/bin/bash 
+set -eux
+
+ptex2pdf -l $1 && ptex2pdf -l $1 && ptex2pdf -l $1
