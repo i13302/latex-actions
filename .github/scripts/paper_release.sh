@@ -1,6 +1,7 @@
 #!/bin/sh 
 set -eux
 
+PDFFILE='paper.pdf'
 TODAY=`date "+%Y%m%d-%H%M%S_%a"`
 
 # create release
@@ -20,4 +21,4 @@ rel_id=`echo ${res} | jq '.id'`
 # upload built pdf
 curl -H "Authorization: token $GITHUB_TOKEN" -X POST https://uploads.github.com/repos/$GITHUB_REPOSITORY/releases/${rel_id}/assets?name=\"${TODAY}_$2\"\
   --header 'Content-Type: application/pdf'\
-  --upload-file $2
+  --upload-file $PDFFILE
