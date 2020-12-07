@@ -23,5 +23,5 @@ jobs:
     - name: Build
       uses: ./.github/docker
     - name: Release
-      uses: ./.github/scripts/paper_release.sh
+      run: chmod +x ./.github/scripts/paper_release.sh && ./.github/scripts/paper_release.sh
   

@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/sh 
 set -eux
 
 TODAY=`date "+%Y%m%d-%H%M%S_%a"`
