@@ -6,6 +6,7 @@ name: "push build"
 on:
   push:
     branches:
+	  - Feature/**
       - Chap/** 
       - develop
 
