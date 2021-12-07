@@ -10,7 +10,7 @@ WORKDIR /workdir
 # ここにカスタムしたいstyやbstファイルを挿入する
 ################################################################################
 
-ENTRYPOINT ["sh"]
+ENTRYPOINT ["/bin/sh"]
 # COPY ["entrypoint.sh","/entrypoint.sh"]
 # RUN ["chmod","+x","/entrypoint.sh"]
 
