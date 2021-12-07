@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      image-name: japlateximame
+      image-name: japlateximage
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -46,7 +46,7 @@ jobs:
           context: .github/docker/
           push: false
           tags: |
-            ${{  env.image-name }}:latest
+            ${{ env.image-name }}:latest
           cache-from: type=local,src=/tmp/${{  env.image-name }}/.buildx-cache
           cache-to: type=local,dest=/tmp/${{  env.image-name }}/.buildx-cache
 
