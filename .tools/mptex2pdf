@@ -7,7 +7,7 @@
 if [ -z "$3" ]
 then 
     docker run --rm -v $PWD:/workdir -u $(id -u):$(id -g) japlateximage \
-        sh -c "ptex2pdf -l paper.tex && ptex2pdf -l $2 && ptex2pdf -l $2"
+        sh -c "ptex2pdf -l paper.tex && ptex2pdf -l paper.tex && ptex2pdf -l paper.tex"
 else
     docker run --rm -v $PWD:/workdir -u $(id -u):$(id -g) japlateximage \
         sh -c "ptex2pdf -l $2 && pbibtex $3 && ptex2pdf -l $2 && ptex2pdf -l $2"
