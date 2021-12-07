@@ -51,6 +51,9 @@ jobs:
           cache-to: type=local,dest=/tmp/${{  env.image-name }}/.buildx-cache
           outputs: type=docker,dest=/tmp/image-${{ env.image-name }}.tar
 
+      - name: Load Docker image 
+        run: docker load --input /tmp/image-${{ env.image-name }}.tar
+
       - name: Tex Compline
         run: |
           docker images
