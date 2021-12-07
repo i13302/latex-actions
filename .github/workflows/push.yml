@@ -46,7 +46,7 @@ jobs:
           context: .github/docker/
           push: false
           tags: |
-            ${{ github.repository_owner }}/${{  env.image-name }}:latest
+            ${{  env.image-name }}:latest
           cache-from: type=local,src=/tmp/${{  env.image-name }}/.buildx-cache
           cache-to: type=local,dest=/tmp/${{  env.image-name }}/.buildx-cache
 
