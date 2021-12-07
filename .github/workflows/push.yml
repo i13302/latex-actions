@@ -52,6 +52,7 @@ jobs:
 
       - name: Tex Compline
         run: |
+          docker images
           bash .tools/mptex2pdf "paper.tex"
 
       - name: Set DATE
