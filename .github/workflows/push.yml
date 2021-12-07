@@ -26,9 +26,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Set up Git Repository
         uses: actions/checkout@v2
-        
-      - name: Tex Compline
-        run: bash .tools/mptex2pdf -l paper.tex ; exit 1
 
       - name: Cache Docker layers
         uses: actions/cache@v2

@@ -3,7 +3,7 @@
 #
 # Docker Imageを用いて，引数のTeXファイルをコンパイルする
 #
-echo $2
+
 if [ -z "$3" ]
 then 
     docker run --rm -v $PWD:/workdir -u $(id -u):$(id -g) japlateximage \
