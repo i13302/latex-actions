@@ -54,9 +54,7 @@ jobs:
         run: docker load --input /tmp/image-${{ env.image-name }}.tar
 
       - name: Tex Compline
-        run: |
-          docker images
-          bash .tools/mptex2pdf "paper.tex"
+        run: bash .tools/mptex2pdf "paper.tex"
 
       - name: Set DATE
         run: echo "DATE=$(date '+%Y%m%d-%H%M%S')" >> $GITHUB_ENV
