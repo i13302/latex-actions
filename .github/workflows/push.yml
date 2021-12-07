@@ -49,6 +49,7 @@ jobs:
             ${{ env.image-name }}:latest
           cache-from: type=local,src=/tmp/${{  env.image-name }}/.buildx-cache
           cache-to: type=local,dest=/tmp/${{  env.image-name }}/.buildx-cache
+          outputs: type=docker,dest=/tmp/image-${{ env.image-name }}.tar
 
       - name: Tex Compline
         run: |
