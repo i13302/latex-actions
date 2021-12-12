@@ -1,0 +1,66 @@
+# This is a basic workflow to help you get started with Actions
+name: "Test Build"
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches:
+      - Feature/**
+      - Chap/**
+      - develop
+      - dev/**
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  Test_Build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    env:
+      image-name: japlateximage
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Set up Git Repository
+        uses: actions/checkout@v2
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/master
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build
+        uses: docker/build-push-action@v2
+        with:
+          context: .github/docker/
+          push: false
+          tags: ${{ env.image-name }}:latest
+          cache-from: type=local,src=/tmp/${{ env.image-name }}/.buildx-cache
+          cache-to: type=local,dest=/tmp/${{ env.image-name }}/.buildx-cache
+          outputs: type=docker,dest=/tmp/image-${{ env.image-name }}.tar
+
+      - name: Load Docker image
+        run: docker load --input /tmp/image-${{ env.image-name }}.tar
+
+      - name: Tex Compline
+        run: chmod +x .tools/mptex2pdf && .tools/mptex2pdf -l paper.tex
+
+      - name: Set DATE
+        run: echo "DATE=$(date '+%Y%m%d-%H%M%S')" >> $GITHUB_ENV
+
+      - name: Upload paper pdf.
+        uses: actions/upload-artifact@master
+        with:
+          name: PDFTEST-${{ env.DATE }}
+          path: paper.pdf
