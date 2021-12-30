@@ -3,8 +3,8 @@ name: Push Image
 on:
   push:
     branches:
-      - "master"
-      # - "dev/action/push-image"
+      #- "master"
+       - "dev/action/push-image"
 
 jobs:
   push_image:
