@@ -4,11 +4,19 @@
 # Docker Imageを用いて，引数のTeXファイルをコンパイルする
 #
 
+if [ -z $IMAGENAME ]
+then
+    IMAGENAME="japlateximage"
+fi
+
+echo 'args is '$@'.'
 if [ -z "$3" ]
-then 
-    docker run --rm -v $PWD:/workdir -u $(id -u):$(id -g) japlateximage \
+then
+    echo 'pattern 2'
+    docker run --rm -v $PWD:/workdir -e TZ=$TZ -u $(id -u):$(id -g) $IMAGENAME \
         sh -c "ptex2pdf -l paper.tex && ptex2pdf -l paper.tex && ptex2pdf -l paper.tex"
 else
-    docker run --rm -v $PWD:/workdir -u $(id -u):$(id -g) japlateximage \
-        sh -c "ptex2pdf -l $2 && pbibtex $3 && ptex2pdf -l $2 && ptex2pdf -l $2"
-fi	
+    echo 'pattern 3'
+    docker run --rm -v $PWD:/workdir -e TZ=$TZ -u $(id -u):$(id -g) $IMAGENAME \
+        sh -c "platex $3 && pbibtex $3 && platex $3 && platex $3 && platex $3 && dvipdfmx $3"
+fi
