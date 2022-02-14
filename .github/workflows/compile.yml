@@ -27,12 +27,35 @@ jobs:
       - name: Set up Git Repository
         uses: actions/checkout@v2
 
-      - name: Pull Image
-        run: docker pull ghcr.io/${{ github.repository_owner }}/${{ env.image-name }}
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/${{ env.image-name }}/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-${{ github.sha }}
+            ${{ github.ref }}
+            refs/head/master
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build
+        uses: docker/build-push-action@v2
+        with:
+          context: .github/image/
+          push: false
+          tags: ${{ env.image-name }}:latest
+          cache-from: type=local,src=/tmp/${{ env.image-name }}/.buildx-cache
+          cache-to: type=local,dest=/tmp/${{ env.image-name }}/.buildx-cache
+          outputs: type=docker,dest=/tmp/image-${{ env.image-name }}.tar
+
+      - name: Load Docker image
+        run: docker load --input /tmp/image-${{ env.image-name }}.tar
 
       - name: Tex Compline
         env:
-          IMAGENAME: ghcr.io/${{ github.repository_owner }}/${{ env.image-name }}
+          IMAGENAME: ${{ env.image-name }}
         run: chmod +x .tools/mptex2pdf && .tools/mptex2pdf -l paper.tex
 
       - name: Set DATE
