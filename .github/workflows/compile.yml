@@ -47,7 +47,6 @@ jobs:
           push: false
           tags: |
             ${{ github.repository_owner }}/${{ env.image-name }}:latest
-            ${{ github.repository_owner }}/${{ env.image-name }}:${{ env.TAGS }}
           cache-from: type=local,src=/tmp/${{ env.image-name }}/.buildx-cache
           cache-to: type=local,dest=/tmp/${{ env.image-name }}/.buildx-cache
 
