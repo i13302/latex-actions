@@ -46,13 +46,17 @@ jobs:
           context: .github/image/
           push: false
           tags: |
-            ${{ github.repository_owner }}/${{ env.image-name }}:latest
+            ${{ env.image-name }}:latest
           cache-from: type=local,src=/tmp/${{ env.image-name }}/.buildx-cache
           cache-to: type=local,dest=/tmp/${{ env.image-name }}/.buildx-cache
+          outputs: type=docker,dest=/tmp/image-${{ env.image-name }}.tar
+
+      - name: Load Docker image
+        run: docker load --input /tmp/image-${{ env.image-name }}.tar
 
       - name: Tex Compline
         env:
-          IMAGENAME: ${{ github.repository_owner }}/${{ env.image-name }}
+          IMAGENAME: ${{ env.image-name }}
         run: chmod +x .tools/mptex2pdf && .tools/mptex2pdf -l paper.tex
 
       - name: Set DATE
