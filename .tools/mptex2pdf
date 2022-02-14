@@ -14,7 +14,7 @@ if [ -z "$3" ]
 then
     echo 'pattern 2'
     docker run --rm -v $PWD:/workdir -e TZ=$TZ -u $(id -u):$(id -g) $IMAGENAME \
-        sh -c "ptex2pdf -l paper.tex && ptex2pdf -l paper.tex && ptex2pdf -l paper.tex"
+        sh -c "platex $2 && platex $2 && platex $2 && dvipdfmx $2"
 else
     echo 'pattern 3'
     docker run --rm -v $PWD:/workdir -e TZ=$TZ -u $(id -u):$(id -g) $IMAGENAME \
