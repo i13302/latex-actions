@@ -6,7 +6,7 @@
 
 if [ -z $IMAGENAME ]
 then
-    IMAGENAME="japlateximage"
+    IMAGENAME="i13302/latexactionstemplate"
 fi
 
 echo 'args is '$@'.'
