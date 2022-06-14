@@ -6,7 +6,8 @@
 
 if [ -z $IMAGENAME ]
 then
-    IMAGENAME="i13302/latexactionstemplate"
+    #IMAGENAME="i13302/latexactionstemplate"
+    IMAGENAME="ghcr.io/i13302/latexactionstemplate"
 fi
 
 echo 'args is '$@'.'
@@ -14,9 +15,9 @@ if [ -z "$3" ]
 then
     echo 'pattern 2'
     docker run --rm -v $PWD:/workdir -e TZ=$TZ -u $(id -u):$(id -g) $IMAGENAME \
-        sh -c "platex $2 && platex $2 && platex $2 && dvipdfmx $2"
+        sh -c "platex $2 && platex $2 && platex $2 && dvipdfmx `basename $2 .tex`"
 else
     echo 'pattern 3'
     docker run --rm -v $PWD:/workdir -e TZ=$TZ -u $(id -u):$(id -g) $IMAGENAME \
-        sh -c "platex $3 && pbibtex $3 && platex $3 && platex $3 && platex $3 && dvipdfmx $3"
+        sh -c "platex $3 && pbibtex $3 && platex $3 && platex $3 && platex $3 && dvipdfmx `basename $3 .tex`"
 fi
