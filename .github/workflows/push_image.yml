@@ -3,17 +3,17 @@ name: Push Image
 on:
   push:
     branches:
-      #- "master"
-       - "dev/action/push-image"
+      - "master"
+      #  - "dev/action/push-image"
 
 jobs:
   push_image:
-    runs-on: ubuntu-20.04
+    runs-on: i13302-actions
     env:
       image-name: latexactionstemplate
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Create TAGS
         run: |
